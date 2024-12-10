@@ -1,12 +1,12 @@
-package org.feed.community_feed.user.domain;
+package org.feed.community_feed.common.domain;
 
 /**
  * @author jiyoung
  */
-public class UserRelationCounter {
+public class PositiveIntegerCounter {
     private int count;
 
-    public UserRelationCounter(){
+    public PositiveIntegerCounter(){
         count = 0;
     }
 
