@@ -1,12 +1,9 @@
 package org.feed.community_feed.user.application;
 
+import org.feed.community_feed.fake.FakeObjectFactory;
 import org.feed.community_feed.user.application.dto.CreateUserRequestDto;
 import org.feed.community_feed.user.application.dto.FollowUserRequestDto;
-import org.feed.community_feed.user.application.interfaces.UserRelationRepository;
-import org.feed.community_feed.user.application.interfaces.UserRepository;
 import org.feed.community_feed.user.domain.User;
-import org.feed.community_feed.user.repository.FakeUserRelationRepository;
-import org.feed.community_feed.user.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 class UserRelationServiceTest {
 
-    private final UserRepository userRepository = new FakeUserRepository();
-    private final UserService userService = new UserService(userRepository);
-    private final UserRelationRepository userRelationRepository = new FakeUserRelationRepository();
-    private final UserRelationService userRelationService = new UserRelationService(userService, userRelationRepository);
+    private final UserService userService = FakeObjectFactory.getUserService();
+    private final UserRelationService userRelationService = FakeObjectFactory.getUserRelationService();
 
     private User user1;
     private User user2;

@@ -15,16 +15,16 @@ import org.feed.community_feed.user.domain.User;
  */
 public class CommentService {
 
-    private final CommentRepository commentRepository;
     private final UserService userService;
     private final PostService postService;
+    private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
 
-    public CommentService(CommentRepository commentRepository, UserService userService, PostService postService,
+    public CommentService(UserService userService, PostService postService, CommentRepository commentRepository,
             LikeRepository likeRepository) {
-        this.commentRepository = commentRepository;
         this.userService = userService;
         this.postService = postService;
+        this.commentRepository = commentRepository;
         this.likeRepository = likeRepository;
     }
 

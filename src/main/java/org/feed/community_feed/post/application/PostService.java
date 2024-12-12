@@ -2,7 +2,6 @@ package org.feed.community_feed.post.application;
 
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
 import org.feed.community_feed.post.application.dto.LikeRequestDto;
-import org.feed.community_feed.post.application.dto.UpdatePostRequestDto;
 import org.feed.community_feed.post.application.interfaces.LikeRepository;
 import org.feed.community_feed.post.application.interfaces.PostRepository;
 import org.feed.community_feed.post.domain.Post;
@@ -24,17 +23,17 @@ public class PostService {
         this.likeRepository = likeRepository;
     }
 
-    public Post getPost(Long id){
+    public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Post not found"));
     }
 
-    public Post createPost(CreatePostRequestDto dto){
+    public Post createPost(CreatePostRequestDto dto) {
         User author = userService.getUser(dto.userId());
         Post post = Post.createPost(null, author, dto.content(), dto.state());
         return postRepository.save(post);
     }
 
-    public Post updatePost(Long postId, UpdatePostRequestDto dto){
+    public Post updatePost(Long postId, CreatePostRequestDto dto) {
         Post post = getPost(postId);
         User user = userService.getUser(dto.userId());
 
@@ -42,11 +41,11 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void likePost(LikeRequestDto dto){
-        Post post = getPost(dto.postId());
+    public void likePost(LikeRequestDto dto) {
+        Post post = getPost(dto.targetId());
         User user = userService.getUser(dto.userId());
 
-        if(likeRepository.checkLike(post, user)){
+        if (likeRepository.checkLike(post, user)) {
             return;
         }
 
@@ -54,11 +53,11 @@ public class PostService {
         likeRepository.like(post, user);
     }
 
-    public void unlikePost(LikeRequestDto dto){
-        Post post = getPost(dto.postId());
+    public void unlikePost(LikeRequestDto dto) {
+        Post post = getPost(dto.targetId());
         User user = userService.getUser(dto.userId());
 
-        if(likeRepository.checkLike(post, user)){
+        if (likeRepository.checkLike(post, user)) {
             post.unlike();
             likeRepository.unLike(post, user);
         }

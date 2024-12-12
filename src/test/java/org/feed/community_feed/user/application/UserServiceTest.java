@@ -1,10 +1,9 @@
 package org.feed.community_feed.user.application;
 
+import org.feed.community_feed.fake.FakeObjectFactory;
 import org.feed.community_feed.user.application.dto.CreateUserRequestDto;
-import org.feed.community_feed.user.application.interfaces.UserRepository;
 import org.feed.community_feed.user.domain.User;
 import org.feed.community_feed.user.domain.UserInfo;
-import org.feed.community_feed.user.repository.FakeUserRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author jiyoung
  */
 class UserServiceTest {
-    private final UserRepository userRepository = new FakeUserRepository();
-    private final UserService userService = new UserService(userRepository);
+    private final UserService userService = FakeObjectFactory.getUserService();
 
     @Test
     void givenUserInfoDto_whenCreateUser_thenCanFindUSer(){
