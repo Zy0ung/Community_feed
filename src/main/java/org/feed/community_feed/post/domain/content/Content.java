@@ -6,8 +6,8 @@ import org.feed.community_feed.post.domain.common.DateTimeInfo;
  * @author jiyoung
  */
 public abstract class Content {
-    String contentText;
-    final DateTimeInfo updateTimeInfo;
+    protected String contentText;
+    protected final DateTimeInfo updateTimeInfo;
 
     protected Content(String contentText) {
         checkText(contentText);
