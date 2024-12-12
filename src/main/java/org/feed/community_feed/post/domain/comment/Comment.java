@@ -2,6 +2,7 @@ package org.feed.community_feed.post.domain.comment;
 
 import org.feed.community_feed.common.domain.PositiveIntegerCounter;
 import org.feed.community_feed.post.domain.Post;
+import org.feed.community_feed.post.domain.content.CommentContent;
 import org.feed.community_feed.post.domain.content.Content;
 import org.feed.community_feed.user.domain.User;
 
@@ -15,6 +16,10 @@ public class Comment {
     private final User author;
     private final Content content;
     private final PositiveIntegerCounter likeCount;
+
+    public static Comment createComment(Post post, User author, String content){
+        return new Comment(null, post, author, new CommentContent(content));
+    }
 
     public Comment(Long id, Post post, User author, Content content) {
         if(author == null) {
