@@ -6,9 +6,14 @@ import org.feed.community_feed.post.domain.content.CommentContent;
 import org.feed.community_feed.post.domain.content.Content;
 import org.feed.community_feed.user.domain.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 /**
  * @author jiyoung
  */
+@Builder
+@AllArgsConstructor
 public class Comment {
 
     private final Long id;
@@ -17,18 +22,18 @@ public class Comment {
     private final Content content;
     private final PositiveIntegerCounter likeCount;
 
-    public static Comment createComment(Post post, User author, String content){
+    public static Comment createComment(Post post, User author, String content) {
         return new Comment(null, post, author, new CommentContent(content));
     }
 
     public Comment(Long id, Post post, User author, Content content) {
-        if(author == null) {
+        if (author == null) {
             throw new IllegalArgumentException();
         }
-        if(post == null){
+        if (post == null) {
             throw new IllegalArgumentException();
         }
-        if(content == null){
+        if (content == null) {
             throw new IllegalArgumentException();
         }
 
@@ -39,19 +44,19 @@ public class Comment {
         this.likeCount = new PositiveIntegerCounter();
     }
 
-    public void like(User user){
-        if(this.author.equals(user)){
+    public void like(User user) {
+        if (this.author.equals(user)) {
             throw new IllegalArgumentException();
         }
         likeCount.increase();
     }
 
-    public void unlike(){
+    public void unlike() {
         likeCount.decrease();
     }
 
-    public void updateComment(User user, String updatedContent){
-        if(!author.equals(user)){
+    public void updateComment(User user, String updatedContent) {
+        if (!author.equals(user)) {
             throw new IllegalArgumentException();
         }
         this.content.updateContent(updatedContent);

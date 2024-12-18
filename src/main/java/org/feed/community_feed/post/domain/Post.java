@@ -6,9 +6,16 @@ import org.feed.community_feed.post.domain.content.PostContent;
 import org.feed.community_feed.post.domain.content.PostPublicationState;
 import org.feed.community_feed.user.domain.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
 /**
  * @author jiyoung
  */
+@Getter
+@Builder
+@AllArgsConstructor
 public class Post {
 
     private final Long id;
@@ -30,7 +37,7 @@ public class Post {
     }
 
     public Post(Long id, User author, Content content, PostPublicationState state) {
-        if(author == null){
+        if (author == null) {
             throw new IllegalArgumentException();
         }
 
@@ -41,19 +48,19 @@ public class Post {
         this.state = state;
     }
 
-    public void like(User user){
-        if(this.author.equals(user)){
+    public void like(User user) {
+        if (this.author.equals(user)) {
             throw new IllegalArgumentException();
         }
         likeCount.increase();
     }
 
-    public void unlike(){
+    public void unlike() {
         likeCount.decrease();
     }
 
-    public void updatePost(User user, String updateContent, PostPublicationState state){
-        if(!this.author.equals(user)){
+    public void updatePost(User user, String updateContent, PostPublicationState state) {
+        if (!this.author.equals(user)) {
             throw new IllegalArgumentException();
         }
         this.state = state;
@@ -68,15 +75,11 @@ public class Post {
         return content.getContentText();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public Content getContentObject(){
+    public Content getContentObject() {
         return content;
+    }
+
+    public PostPublicationState getState() {
+        return state;
     }
 }

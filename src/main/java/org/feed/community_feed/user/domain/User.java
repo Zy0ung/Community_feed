@@ -4,17 +4,25 @@ import org.feed.community_feed.common.domain.PositiveIntegerCounter;
 
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
 /**
  * @author jiyoung
  */
+@Getter
+@Builder
+@AllArgsConstructor
 public class User {
+
     private final Long id;
     private final UserInfo info;
     private final PositiveIntegerCounter followingCount;
     private final PositiveIntegerCounter followerCount;
 
     public User(Long id, UserInfo userInfo) {
-        if(userInfo == null) {
+        if (userInfo == null) {
             throw new IllegalArgumentException();
         }
         this.id = id;
@@ -23,8 +31,8 @@ public class User {
         this.followerCount = new PositiveIntegerCounter();
     }
 
-    public void follow(User targetUser){
-        if(this.equals(targetUser)){
+    public void follow(User targetUser) {
+        if (this.equals(targetUser)) {
             throw new IllegalArgumentException();
         }
 
@@ -32,8 +40,8 @@ public class User {
         targetUser.increaseFollowerCount();
     }
 
-    public void unfollow(User targetUser){
-        if(this.equals(targetUser)){
+    public void unfollow(User targetUser) {
+        if (this.equals(targetUser)) {
             throw new IllegalArgumentException();
         }
 
@@ -41,11 +49,11 @@ public class User {
         targetUser.decreaseFollowerCount();
     }
 
-    private void increaseFollowerCount(){
+    private void increaseFollowerCount() {
         followerCount.increase();
     }
 
-    private void decreaseFollowerCount(){
+    private void decreaseFollowerCount() {
         followerCount.decrease();
     }
 
@@ -66,19 +74,19 @@ public class User {
         return Objects.hashCode(id);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public int followerCount(){
+    public int followerCount() {
         return followerCount.getCount();
     }
 
-    public int followingCount(){
+    public int followingCount() {
         return followingCount.getCount();
     }
 
-    public UserInfo getInfo() {
-        return info;
+    public String getProfileImage() {
+        return info.getProfileImageUrl();
+    }
+
+    public String getName() {
+        return info.getName();
     }
 }

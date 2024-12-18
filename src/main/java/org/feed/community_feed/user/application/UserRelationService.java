@@ -3,10 +3,12 @@ package org.feed.community_feed.user.application;
 import org.feed.community_feed.user.application.dto.FollowUserRequestDto;
 import org.feed.community_feed.user.application.interfaces.UserRelationRepository;
 import org.feed.community_feed.user.domain.User;
+import org.springframework.stereotype.Service;
 
 /**
  * @author jiyoung
  */
+@Service
 public class UserRelationService {
     private final UserService userService;
     private final UserRelationRepository userRelationRepository;
@@ -16,11 +18,11 @@ public class UserRelationService {
         this.userRelationRepository = userRelationRepository;
     }
 
-    public void follow(FollowUserRequestDto dto){
+    public void follow(FollowUserRequestDto dto) {
         User user = userService.getUser(dto.userId());
         User targetUser = userService.getUser(dto.targetUserId());
 
-        if(userRelationRepository.isAlreadyFollow(user, targetUser)){
+        if (userRelationRepository.isAlreadyFollow(user, targetUser)) {
             throw new IllegalArgumentException();
         }
 
@@ -28,11 +30,11 @@ public class UserRelationService {
         userRelationRepository.save(user, targetUser);
     }
 
-    public void unFollow(FollowUserRequestDto dto){
+    public void unFollow(FollowUserRequestDto dto) {
         User user = userService.getUser(dto.userId());
         User targetUser = userService.getUser(dto.targetUserId());
 
-        if(!userRelationRepository.isAlreadyFollow(user, targetUser)){
+        if (!userRelationRepository.isAlreadyFollow(user, targetUser)) {
             throw new IllegalArgumentException();
         }
 

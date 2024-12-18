@@ -5,7 +5,6 @@ import org.feed.community_feed.user.domain.User;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author jiyoung
@@ -16,7 +15,7 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
-        if(user.getId() != null) {
+        if (user.getId() != null) {
             store.put(user.getId(), user);
         }
         Long id = store.size() + 1L;
@@ -26,7 +25,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public User findById(Long id) {
+        return store.get(id);
     }
 }
