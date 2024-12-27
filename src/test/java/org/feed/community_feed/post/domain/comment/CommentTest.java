@@ -1,7 +1,6 @@
 package org.feed.community_feed.post.domain.comment;
 
 import org.feed.community_feed.post.domain.Post;
-import org.feed.community_feed.post.domain.content.CommentContent;
 import org.feed.community_feed.post.domain.content.PostContent;
 import org.feed.community_feed.user.domain.User;
 import org.feed.community_feed.user.domain.UserInfo;
@@ -20,7 +19,7 @@ class CommentTest {
     private final User otherUser = new User(2L, userInfo);
 
     private final Post post = new Post(1L, user, new PostContent("content"));
-    private final Comment comment = new Comment(1L, post, user, new CommentContent("content"));
+    private final Comment comment = new Comment(1L, post, user, "content");
 
     @Test
     void givenCommentCreated_whenLike_thenLikeCountShouldBe1() {
