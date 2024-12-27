@@ -2,15 +2,18 @@ package org.feed.community_feed.post.application;
 
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
 import org.feed.community_feed.post.application.dto.LikeRequestDto;
+import org.feed.community_feed.post.application.dto.UpdatePostRequestDto;
 import org.feed.community_feed.post.application.interfaces.LikeRepository;
 import org.feed.community_feed.post.application.interfaces.PostRepository;
 import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.user.application.UserService;
 import org.feed.community_feed.user.domain.User;
+import org.springframework.stereotype.Service;
 
 /**
  * @author jiyoung
  */
+@Service
 public class PostService {
 
     private final UserService userService;
@@ -24,7 +27,7 @@ public class PostService {
     }
 
     public Post getPost(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        return postRepository.findById(id);
     }
 
     public Post createPost(CreatePostRequestDto dto) {
@@ -33,7 +36,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(Long postId, CreatePostRequestDto dto) {
+    public Post updatePost(Long postId, UpdatePostRequestDto dto) {
         Post post = getPost(postId);
         User user = userService.getUser(dto.userId());
 

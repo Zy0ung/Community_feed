@@ -5,7 +5,6 @@ import org.feed.community_feed.post.domain.comment.Comment;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 /**
@@ -17,19 +16,19 @@ public class FakeCommentRepository implements CommentRepository {
 
     @Override
     public Comment save(Comment comment) {
-        if(comment.getId() != null){
+        if (comment.getId() != null) {
             store.put(comment.getId(), comment);
             return comment;
         }
 
         long id = store.size() + 1;
-        Comment newComment = new Comment(id, comment.getPost(), comment.getAuthor(), comment.getContentObject());
+        Comment newComment = new Comment(id, comment.getPost(), comment.getAuthor(), comment.getContentText());
         store.put(id, newComment);
         return newComment;
     }
 
     @Override
-    public Optional<Comment> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Comment findById(Long id) {
+        return store.get(id);
     }
 }

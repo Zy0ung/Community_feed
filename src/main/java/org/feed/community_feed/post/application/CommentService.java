@@ -9,10 +9,12 @@ import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.post.domain.comment.Comment;
 import org.feed.community_feed.user.application.UserService;
 import org.feed.community_feed.user.domain.User;
+import org.springframework.stereotype.Service;
 
 /**
  * @author jiyoung
  */
+@Service
 public class CommentService {
 
     private final UserService userService;
@@ -28,31 +30,31 @@ public class CommentService {
         this.likeRepository = likeRepository;
     }
 
-    public Comment getComment(Long id){
-        return commentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public Comment getComment(Long id) {
+        return commentRepository.findById(id);
     }
 
-    public Comment createComment(CreateCommentRequestDto dto){
+    public Comment createComment(CreateCommentRequestDto dto) {
         Post post = postService.getPost(dto.postId());
-        User user = userService.getUser(dto.userId());
+        User user = userService.getUser(dto.authorId());
 
-        Comment comment = Comment.createComment(post, user, dto.Content());
+        Comment comment = new Comment(null, post, user, dto.content());
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(UpdateCommentRequestDto dto){
-        Comment comment = getComment(dto.commentId());
+    public Comment updateComment(Long commentId, UpdateCommentRequestDto dto) {
+        Comment comment = getComment(commentId);
         User user = userService.getUser(dto.userId());
 
         comment.updateComment(user, dto.content());
         return commentRepository.save(comment);
     }
 
-    public void likeComment(LikeRequestDto dto){
+    public void likeComment(LikeRequestDto dto) {
         Comment comment = getComment(dto.targetId());
         User user = userService.getUser(dto.userId());
 
-        if(likeRepository.checkLike(comment, user)){
+        if (likeRepository.checkLike(comment, user)) {
             return;
         }
 
@@ -60,11 +62,11 @@ public class CommentService {
         likeRepository.like(comment, user);
     }
 
-    public void unLikeComment(LikeRequestDto dto){
+    public void unLikeComment(LikeRequestDto dto) {
         Comment comment = getComment(dto.targetId());
         User user = userService.getUser(dto.userId());
 
-        if(likeRepository.checkLike(comment, user)){
+        if (likeRepository.checkLike(comment, user)) {
             comment.unlike();
             likeRepository.unLike(comment, user);
         }

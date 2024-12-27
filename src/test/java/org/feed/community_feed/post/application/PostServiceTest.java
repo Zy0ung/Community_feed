@@ -3,6 +3,7 @@ package org.feed.community_feed.post.application;
 import org.feed.community_feed.fake.FakeObjectFactory;
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
 import org.feed.community_feed.post.application.dto.LikeRequestDto;
+import org.feed.community_feed.post.application.dto.UpdatePostRequestDto;
 import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.post.domain.content.PostPublicationState;
 import org.feed.community_feed.user.application.UserService;
@@ -42,7 +43,9 @@ class PostServiceTest {
         Post savePost = postService.createPost(dto);
 
         // when
-        Post updatedPost = postService.updatePost(savePost.getId(), dto);
+        UpdatePostRequestDto updateDto =
+                new UpdatePostRequestDto(user.getId(), "this is test content", PostPublicationState.PUBLIC);
+        Post updatedPost = postService.updatePost(savePost.getId(), updateDto);
 
         // then
         assertEquals(savePost.getId(), updatedPost.getId());

@@ -44,7 +44,7 @@ class CommentServiceTest {
         Comment comment = commentService.createComment(createCommentRequestDto);
 
         // then
-        String content = comment.getContent();
+        String content = comment.getContentText();
         assertEquals(commentContentText, content);
     }
 
@@ -56,12 +56,12 @@ class CommentServiceTest {
         // when
         UpdateCommentRequestDto updateCommentRequestDto =
                 new UpdateCommentRequestDto(comment.getId(), user.getId(), "updated-content");
-        Comment updatedComment = commentService.updateComment(updateCommentRequestDto);
+        Comment updatedComment = commentService.updateComment(comment.getId(), updateCommentRequestDto);
 
         // then
         assertEquals(comment.getId(), updatedComment.getId());
         assertEquals(comment.getAuthor(), updatedComment.getAuthor());
-        assertEquals(comment.getContent(), updatedComment.getContent());
+        assertEquals(comment.getContentText(), updatedComment.getContentText());
     }
 
     @Test

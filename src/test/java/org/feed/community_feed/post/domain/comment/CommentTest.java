@@ -23,7 +23,7 @@ class CommentTest {
     private final Comment comment = new Comment(1L, post, user, new CommentContent("content"));
 
     @Test
-    void givenCommentCreated_whenLike_thenLikeCountShouldBe1(){
+    void givenCommentCreated_whenLike_thenLikeCountShouldBe1() {
         // when
         comment.like(otherUser);
 
@@ -32,13 +32,13 @@ class CommentTest {
     }
 
     @Test
-    void givenCommentCreated_whenLikeBySelf_thenThrowException(){
+    void givenCommentCreated_whenLikeBySelf_thenThrowException() {
         // when, then
         assertThrows(IllegalArgumentException.class, () -> comment.like(user));
     }
 
     @Test
-    void givenCommentCreatedAndLike_whenUnLike_thenLikeCountShouldBe0(){
+    void givenCommentCreatedAndLike_whenUnLike_thenLikeCountShouldBe0() {
         // given
         comment.like(otherUser);
 
@@ -50,7 +50,7 @@ class CommentTest {
     }
 
     @Test
-    void givenCommentCreated_whenUnlike_thenLikeCountShouldBe0(){
+    void givenCommentCreated_whenUnlike_thenLikeCountShouldBe0() {
         // when
         comment.unlike();
 
@@ -59,19 +59,19 @@ class CommentTest {
     }
 
     @Test
-    void givenComment_whenUpdateContent_thenShouldBeUpdated(){
+    void givenComment_whenUpdateContent_thenShouldBeUpdated() {
         // given
-        String newCommentContent = "new Content";
+        String newCommentContent = "new content";
 
         // when
         comment.updateComment(user, newCommentContent);
 
         //then
-        assertEquals(newCommentContent, comment.getContent());
+        assertEquals(newCommentContent, comment.getContentText());
     }
 
     @Test
-    void givenComment_whenUpdateContentOver100_thenThrowException(){
+    void givenComment_whenUpdateContentOver100_thenThrowException() {
         // given
         String newCommentContent = "a".repeat(101);
 
