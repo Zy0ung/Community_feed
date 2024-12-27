@@ -6,6 +6,7 @@ import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.post.domain.content.PostContent;
 import org.feed.community_feed.post.domain.content.PostPublicationState;
 import org.feed.community_feed.user.repository.entity.UserEntity;
+import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Convert;
@@ -46,6 +47,9 @@ public class PostEntity extends TimeBaseEntity {
     private PostPublicationState state;
 
     private Integer likeCount;
+
+    @ColumnDefault("0")
+    private int commentCount;
 
     public PostEntity(Post post) {
         this.id = post.getId();
