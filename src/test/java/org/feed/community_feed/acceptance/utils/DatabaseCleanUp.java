@@ -39,13 +39,17 @@ public class DatabaseCleanUp implements InitializingBean {
     @Transactional
     public void execute() {
         em.flush();
-        em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
+        em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+
         for (String tableName : tableNames) {
             em.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
+
             if (!notGeneratedTableNames.contains(tableName)) {
-                em.createNativeQuery("ALTER TABLE " + tableName + "ALTER COLUMN ID RESTART WITH 1").executeUpdate();
+                em.createNativeQuery("ALTER TABLE " + tableName + " AUTO_INCREMENT = 1").executeUpdate();
             }
         }
-        em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+
+        em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
     }
+
 }
