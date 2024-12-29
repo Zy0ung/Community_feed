@@ -41,7 +41,7 @@ public class FeedAcceptanceTest extends AcceptanceTestTemplate {
         List<GetPostContentResponseDto> result = requestFeedList(1L);
 
         // then
-        assertEquals(1, result.size());
+        assertEquals(1, requestFeedList(1L).size());
         assertEquals(createdPostId, result.get(0).getId());
     }
 }

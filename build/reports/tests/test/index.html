@@ -20,13 +20,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">61</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">1</div>
 <p>failures</p>
 </div>
 </td>
@@ -38,7 +38,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.867s</div>
+<div class="counter">5.888s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,8 +47,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
 <p>successful</p>
 </div>
 </td>
@@ -58,13 +58,25 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Packages</a>
+<a href="#tab0">Failed tests</a>
 </li>
 <li>
-<a href="#tab1">Classes</a>
+<a href="#tab1">Packages</a>
+</li>
+<li>
+<a href="#tab2">Classes</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="classes/org.feed.community_feed.acceptance.FeedAcceptanceTest.html">FeedAcceptanceTest</a>.
+<a href="classes/org.feed.community_feed.acceptance.FeedAcceptanceTest.html#givenUserHasFollowerWhenCreatePostThenFollowerFeedCanGetPost()">givenUserHasFollowerWhenCreatePostThenFollowerFeedCanGetPost()</a>
+</li>
+</ul>
+</div>
+<div id="tab1" class="tab">
 <h2>Packages</h2>
 <table>
 <thead>
@@ -79,99 +91,19 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.html">org.feed.community_feed</a>
+<td class="failures">
+<a href="packages/org.feed.community_feed.acceptance.html">org.feed.community_feed.acceptance</a>
 </td>
 <td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.730s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.common.domain.html">org.feed.community_feed.common.domain</a>
-</td>
-<td>3</td>
-<td>0</td>
-<td>0</td>
-<td>0.004s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.post.application.html">org.feed.community_feed.post.application</a>
-</td>
-<td>10</td>
-<td>0</td>
-<td>0</td>
-<td>0.009s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.post.domain.html">org.feed.community_feed.post.domain</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.009s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.post.domain.comment.html">org.feed.community_feed.post.domain.comment</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.010s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.post.domain.common.html">org.feed.community_feed.post.domain.common</a>
-</td>
 <td>1</td>
 <td>0</td>
-<td>0</td>
-<td>0.003s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.post.domain.content.html">org.feed.community_feed.post.domain.content</a>
-</td>
-<td>18</td>
-<td>0</td>
-<td>0</td>
-<td>0.066s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.user.application.html">org.feed.community_feed.user.application</a>
-</td>
-<td>7</td>
-<td>0</td>
-<td>0</td>
-<td>0.022s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/org.feed.community_feed.user.domain.html">org.feed.community_feed.user.domain</a>
-</td>
-<td>9</td>
-<td>0</td>
-<td>0</td>
-<td>0.014s</td>
-<td class="success">100%</td>
+<td>5.888s</td>
+<td class="failures">0%</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="tab1" class="tab">
+<div id="tab2" class="tab">
 <h2>Classes</h2>
 <table>
 <thead>
@@ -186,134 +118,14 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.CommunityFeedApplicationTests.html">org.feed.community_feed.CommunityFeedApplicationTests</a>
+<td class="failures">
+<a href="classes/org.feed.community_feed.acceptance.FeedAcceptanceTest.html">org.feed.community_feed.acceptance.FeedAcceptanceTest</a>
 </td>
 <td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.730s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.common.domain.PositiveIntegerCounterTest.html">org.feed.community_feed.common.domain.PositiveIntegerCounterTest</a>
-</td>
-<td>3</td>
-<td>0</td>
-<td>0</td>
-<td>0.004s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.application.CommentServiceTest.html">org.feed.community_feed.post.application.CommentServiceTest</a>
-</td>
-<td>4</td>
-<td>0</td>
-<td>0</td>
-<td>0.006s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.application.PostServiceTest.html">org.feed.community_feed.post.application.PostServiceTest</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.003s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.domain.PostTest.html">org.feed.community_feed.post.domain.PostTest</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.009s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.domain.comment.CommentTest.html">org.feed.community_feed.post.domain.comment.CommentTest</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.010s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.domain.common.DateTimeInfoTest.html">org.feed.community_feed.post.domain.common.DateTimeInfoTest</a>
-</td>
 <td>1</td>
 <td>0</td>
-<td>0</td>
-<td>0.003s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.domain.content.CommentContentTest.html">org.feed.community_feed.post.domain.content.CommentContentTest</a>
-</td>
-<td>7</td>
-<td>0</td>
-<td>0</td>
-<td>0.043s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.post.domain.content.PostContentTest.html">org.feed.community_feed.post.domain.content.PostContentTest</a>
-</td>
-<td>11</td>
-<td>0</td>
-<td>0</td>
-<td>0.023s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.user.application.UserRelationServiceTest.html">org.feed.community_feed.user.application.UserRelationServiceTest</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.022s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.user.application.UserServiceTest.html">org.feed.community_feed.user.application.UserServiceTest</a>
-</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.user.domain.UserInfoTest.html">org.feed.community_feed.user.domain.UserInfoTest</a>
-</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0.006s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/org.feed.community_feed.user.domain.UserTest.html">org.feed.community_feed.user.domain.UserTest</a>
-</td>
-<td>7</td>
-<td>0</td>
-<td>0</td>
-<td>0.008s</td>
-<td class="success">100%</td>
+<td>5.888s</td>
+<td class="failures">0%</td>
 </tr>
 </tbody>
 </table>
@@ -326,7 +138,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2024. 12. 27. 오후 12:16:07</p>
+<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2024. 12. 29. 오후 10:19:55</p>
 </div>
 </div>
 </body>
