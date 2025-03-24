@@ -1,5 +1,6 @@
 package org.feed.community_feed.post.repository;
 
+
 import org.feed.community_feed.post.application.interfaces.LikeRepository;
 import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.post.domain.comment.Comment;
@@ -10,13 +11,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author jiyoung
- */
 public class FakeLikeRepository implements LikeRepository {
 
-    private final Map<Post, Set<User>> postLikes = new HashMap<>();
-    private final Map<Comment, Set<User>> commentLikes = new HashMap<>();
+    Map<Post, Set<User>> postLikes = new HashMap<>();
+    Map<Comment, Set<User>> commentLikes = new HashMap<>();
 
     @Override
     public boolean checkLike(Post post, User user) {
@@ -24,6 +22,14 @@ public class FakeLikeRepository implements LikeRepository {
             return false;
         }
         return postLikes.get(post).contains(user);
+    }
+
+    @Override
+    public boolean checkLike(Comment post, User user) {
+        if (commentLikes.get(post) == null) {
+            return false;
+        }
+        return commentLikes.get(post).contains(user);
     }
 
     @Override
@@ -44,14 +50,6 @@ public class FakeLikeRepository implements LikeRepository {
         }
         users.remove(user);
         postLikes.put(post, users);
-    }
-
-    @Override
-    public boolean checkLike(Comment comment, User user) {
-        if (commentLikes.get(comment) == null) {
-            return false;
-        }
-        return commentLikes.get(comment).contains(user);
     }
 
     @Override

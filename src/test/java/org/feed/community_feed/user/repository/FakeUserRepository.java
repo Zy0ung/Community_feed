@@ -1,14 +1,12 @@
 package org.feed.community_feed.user.repository;
 
+
 import org.feed.community_feed.user.application.interfaces.UserRepository;
 import org.feed.community_feed.user.domain.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author jiyoung
- */
 public class FakeUserRepository implements UserRepository {
 
     private final Map<Long, User> store = new HashMap<>();
@@ -17,8 +15,9 @@ public class FakeUserRepository implements UserRepository {
     public User save(User user) {
         if (user.getId() != null) {
             store.put(user.getId(), user);
+            return user;
         }
-        Long id = store.size() + 1L;
+        long id = store.size() + 1;
         User newUser = new User(id, user.getInfo());
         store.put(id, newUser);
         return newUser;

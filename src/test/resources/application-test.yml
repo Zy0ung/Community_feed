@@ -1,11 +1,21 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
+    url: jdbc:h2:tcp://localhost/~/community_feed
     username: sa
     password:
 
   jpa:
     hibernate:
-      ddl-auto: update
-    open-in-view: false
+      ddl-auto: update  # DB 스키마 자동 업데이트 (기존 테이블을 덮어쓰지 않음)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect  # H2 전용 다이얼렉트 설정
+        format_sql: true  # SQL 가독성을 위해 포맷팅
+        show_sql: true  # SQL 쿼리 로깅
+    open-in-view: false  # 성능 최적화
+
+logging:
+  level:
+    org.hibernate.SQL: debug  # Hibernate SQL 실행 로그 출력
+    org.hibernate.type.descriptor.sql.BasicBinder: trace  # 바인딩되는 SQL 파라미터 로그

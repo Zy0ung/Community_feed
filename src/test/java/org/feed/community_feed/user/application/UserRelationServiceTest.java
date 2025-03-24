@@ -1,6 +1,6 @@
 package org.feed.community_feed.user.application;
 
-import org.feed.community_feed.fake.FakeObjectFactory;
+import org.feed.community_feed.common.FakeObjectFactory;
 import org.feed.community_feed.user.application.dto.CreateUserRequestDto;
 import org.feed.community_feed.user.application.dto.FollowUserRequestDto;
 import org.feed.community_feed.user.domain.User;
@@ -10,80 +10,76 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author jiyoung
- */
 class UserRelationServiceTest {
-
     private final UserService userService = FakeObjectFactory.getUserService();
     private final UserRelationService userRelationService = FakeObjectFactory.getUserRelationService();
-
     private User user1;
     private User user2;
-    private FollowUserRequestDto requestDto;
+    private FollowUserRequestDto relationDto;
 
     @BeforeEach
-    void init(){
-        CreateUserRequestDto dto = new CreateUserRequestDto("test", "");
-        this.user1 = userService.createUser(dto);
-        this.user2 = userService.createUser(dto);
-
-        this.requestDto = new FollowUserRequestDto(user1.getId(), user2.getId());
+    void setUp() {
+        // given
+        CreateUserRequestDto req = new CreateUserRequestDto("Doe", "");
+        this.user1 = userService.createUser(req);
+        this.user2 = userService.createUser(req);
+        this.relationDto = new FollowUserRequestDto(user1.getId(), user2.getId());
     }
 
+
     @Test
-    void givenCreateTwoUser_whenFollow_thenUserFollowSaved(){
+    void givenCreateTwoUserWhenFollowThenUserFollowOtherUser() {
         // when
-        userRelationService.follow(requestDto);
+        userRelationService.follow(relationDto);
 
         // then
-        assertEquals(1, user1.followingCount());
-        assertEquals(1, user2.followerCount());
+        assertEquals(1, user1.getFollowingCount());
+        assertEquals(1, user2.getFollowerCount());
     }
 
     @Test
-    void givenCreateTwoUserFollowed_whenFollow_thenUserThrowError(){
+    void givenFollowUserWhenFollowAgainThenThrowException() {
         // given
-        userRelationService.follow(requestDto);
+        userRelationService.follow(relationDto);
 
         // when, then
-        assertThrows(IllegalArgumentException.class, ()-> userRelationService.follow(requestDto));
+        assertThrows(IllegalArgumentException.class, () -> userRelationService.follow(relationDto));
     }
 
     @Test
-    void givenCreateOneUser_whenFollow_thenUserThrowError(){
+    void givenFollowUserWhenFollowSelfThenThrowException() {
         // given
         FollowUserRequestDto sameUser = new FollowUserRequestDto(user1.getId(), user1.getId());
 
         // when, then
-        assertThrows(IllegalArgumentException.class, ()-> userRelationService.follow(sameUser));
+        assertThrows(IllegalArgumentException.class, () -> userRelationService.follow(sameUser));
     }
 
     @Test
-    void givenCreateTwoUserFollow_whenUnFollow_thenUserUnFollowSaved(){
+    void givenFollowUserWhenUnfollowThenUserUnfollowOtherUser() {
         // given
-        userRelationService.follow(requestDto);
+        userRelationService.follow(relationDto);
 
-        //when
-        userRelationService.unFollow(requestDto);
+        // when
+        userRelationService.unFollow(relationDto);
 
         // then
-        assertEquals(0, user1.followingCount());
-        assertEquals(0, user2.followerCount());
+        assertEquals(0, user1.getFollowingCount());
+        assertEquals(0, user2.getFollowerCount());
     }
 
     @Test
-    void givenCreateTwoUser_whenUnfollow_thenUserThrowError(){
+    void givenUnfollowUserWhenUnfollowAgainThenThrowException() {
         // when, then
-        assertThrows(IllegalArgumentException.class, ()-> userRelationService.unFollow(requestDto));
+        assertThrows(IllegalArgumentException.class, () -> userRelationService.unFollow(relationDto));
     }
 
     @Test
-    void givenCreateOneUser_whenUnfollow_thenUserThrowError(){
+    void givenUnfollowUserWhenUnfollowSelfThenThrowException() {
         // given
         FollowUserRequestDto sameUser = new FollowUserRequestDto(user1.getId(), user1.getId());
 
         // when, then
-        assertThrows(IllegalArgumentException.class, ()-> userRelationService.unFollow(sameUser));
+        assertThrows(IllegalArgumentException.class, () -> userRelationService.unFollow(sameUser));
     }
 }

@@ -1,4 +1,4 @@
-package org.feed.community_feed.fake;
+package org.feed.community_feed.common;
 
 import org.feed.community_feed.post.application.CommentService;
 import org.feed.community_feed.post.application.PostService;
@@ -15,9 +15,6 @@ import org.feed.community_feed.user.application.interfaces.UserRepository;
 import org.feed.community_feed.user.repository.FakeUserRelationRepository;
 import org.feed.community_feed.user.repository.FakeUserRepository;
 
-/**
- * @author jiyoung
- */
 public class FakeObjectFactory {
 
     private static final UserRepository fakeUserRepository = new FakeUserRepository();
@@ -31,7 +28,8 @@ public class FakeObjectFactory {
     private static final PostService postService = new PostService(userService, fakePostRepository, fakeLikeRepository);
     private static final CommentService commentService = new CommentService(userService, postService, fakeCommentRepository, fakeLikeRepository);
 
-    private FakeObjectFactory() {}
+    private FakeObjectFactory() {
+    }
 
     public static UserService getUserService() {
         return userService;

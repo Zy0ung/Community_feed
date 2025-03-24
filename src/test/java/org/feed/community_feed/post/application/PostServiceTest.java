@@ -1,109 +1,96 @@
 package org.feed.community_feed.post.application;
 
-import org.feed.community_feed.fake.FakeObjectFactory;
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
 import org.feed.community_feed.post.application.dto.LikeRequestDto;
 import org.feed.community_feed.post.application.dto.UpdatePostRequestDto;
 import org.feed.community_feed.post.domain.Post;
 import org.feed.community_feed.post.domain.content.PostPublicationState;
-import org.feed.community_feed.user.application.UserService;
-import org.feed.community_feed.user.application.dto.CreateUserRequestDto;
-import org.feed.community_feed.user.domain.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author jiyoung
- */
-class PostServiceTest {
 
-    private final UserService userService = FakeObjectFactory.getUserService();
-    private final PostService postService = FakeObjectFactory.getPostService();
-
-    private final User user = userService.createUser(new CreateUserRequestDto("user1", null));
-    private final User otherUser = userService.createUser(new CreateUserRequestDto("user1", null));
-
-    private final CreatePostRequestDto dto =
-            new CreatePostRequestDto(user.getId(), "this is test content", PostPublicationState.PUBLIC);
+class PostServiceTest extends PostServiceTestTemplate {
+    CreatePostRequestDto dto = new CreatePostRequestDto(user.getId(), "test-content", PostPublicationState.PUBLIC);
 
     @Test
-    void givenPostRequestDto_whenCreate_thenReturnPost() {
+    void givenPostRequestDtoWhenCreateThenReturnPost() {
         // when
-        Post savePost = postService.createPost(dto);
+        Post savedPost = postService.createPost(dto);
 
         // then
-        Post post = postService.getPost(savePost.getId());
-        assertEquals(savePost, post);
+        Post post = postService.getPost(savedPost.getId());
+        assertEquals(savedPost, post);
     }
 
     @Test
-    void givenCreatePost_whenUpdate_thenReturnUpdatePost() {
+    void givenCreatePostWhenUpdateThenReturnUpdatedPost() {
         // given
-        Post savePost = postService.createPost(dto);
+        Post savedPost = postService.createPost(dto);
 
         // when
-        UpdatePostRequestDto updateDto =
-                new UpdatePostRequestDto(user.getId(), "this is test content", PostPublicationState.PUBLIC);
-        Post updatedPost = postService.updatePost(savePost.getId(), updateDto);
+        UpdatePostRequestDto updateDto = new UpdatePostRequestDto(user.getId(), "updated-content", PostPublicationState.PRIVATE);
+        Post updatedPost = postService.updatePost(savedPost.getId(), updateDto);
 
         // then
-        assertEquals(savePost.getId(), updatedPost.getId());
-        assertEquals(savePost.getAuthor(), updatedPost.getAuthor());
-        assertEquals(savePost.getContent(), updatedPost.getContent());
+        String content = updatedPost.getContent();
+        assertEquals("updated-content", content);
+        assertEquals(PostPublicationState.PRIVATE, updatedPost.getState());
     }
 
     @Test
-    void givenCreatedPost_whenLiked_thenReturnPostWithLike() {
+    void givenCreatedPostWhenLikedThenReturnPostWithLike() {
         // given
-        Post savePost = postService.createPost(dto);
+        Post savedPost = postService.createPost(dto);
 
         // when
-        LikeRequestDto likeRequestDto = new LikeRequestDto(savePost.getId(), otherUser.getId());
+        LikeRequestDto likeRequestDto = new LikeRequestDto(otherUser.getId(), savedPost.getId());
         postService.likePost(likeRequestDto);
 
         // then
-        assertEquals(1, savePost.getLikeCount());
+        assertEquals(1, savedPost.getLikeCount());
     }
 
     @Test
-    void givenCreatedPost_whenLikedTwice_thenReturnPostWithLike() {
+    void givenCreatedPostWhenLikedTwiceThenReturnPostWithLike() {
         // given
-        Post savePost = postService.createPost(dto);
+        Post savedPost = postService.createPost(dto);
 
         // when
-        LikeRequestDto likeRequestDto = new LikeRequestDto(savePost.getId(), otherUser.getId());
+        LikeRequestDto likeRequestDto = new LikeRequestDto(otherUser.getId(), savedPost.getId());
         postService.likePost(likeRequestDto);
         postService.likePost(likeRequestDto);
 
         // then
-        assertEquals(1, savePost.getLikeCount());
+        assertEquals(1, savedPost.getLikeCount());
     }
 
     @Test
-    void givenCreatedPostLiked_whenUnLiked_thenReturnPostWithLike() {
+    void givenCreatedPostWhenUnlikedThenReturnPostWithoutLike() {
         // given
-        Post savePost = postService.createPost(dto);
-        LikeRequestDto likeRequestDto = new LikeRequestDto(savePost.getId(), otherUser.getId());
-        postService.likePost(likeRequestDto);
+        Post savedPost = postService.createPost(dto);
 
         // when
+        LikeRequestDto likeRequestDto = new LikeRequestDto(otherUser.getId(), savedPost.getId());
+        postService.likePost(likeRequestDto);
         postService.unlikePost(likeRequestDto);
 
         // then
-        assertEquals(0, savePost.getLikeCount());
+        assertEquals(0, savedPost.getLikeCount());
     }
 
     @Test
-    void givenCreatedPost_whenUnLiked_thenReturnPostWithLike() {
+    void givenCreatedPostWhenUnlikedTwiceThenReturnPostWithoutLike() {
         // given
-        Post savePost = postService.createPost(dto);
+        Post savedPost = postService.createPost(dto);
 
         // when
-        LikeRequestDto likeRequestDto = new LikeRequestDto(savePost.getId(), otherUser.getId());
+        LikeRequestDto likeRequestDto = new LikeRequestDto(otherUser.getId(), savedPost.getId());
+        postService.likePost(likeRequestDto);
+        postService.unlikePost(likeRequestDto);
         postService.unlikePost(likeRequestDto);
 
         // then
-        assertEquals(0, savePost.getLikeCount());
+        assertEquals(0, savedPost.getLikeCount());
     }
 }

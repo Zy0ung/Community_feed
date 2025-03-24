@@ -1,4 +1,4 @@
-package org.feed.community_feed.acceptance.steps;
+package org.feed.community_feed.acceptance.post;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -7,11 +7,7 @@ import org.feed.community_feed.user.application.dto.CreateUserRequestDto;
 import org.feed.community_feed.user.application.dto.FollowUserRequestDto;
 import org.springframework.http.MediaType;
 
-/**
- * @author jiyoung
- */
 public class UserAcceptanceSteps {
-
     public static ExtractableResponse<Response> createUser(CreateUserRequestDto dto) {
         return RestAssured
                 .given()

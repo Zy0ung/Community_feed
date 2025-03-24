@@ -1,7 +1,6 @@
 package org.feed.community_feed.post.domain;
 
-import org.feed.community_feed.post.domain.content.PostContent;
-import org.feed.community_feed.post.domain.content.PostPublicationState;
+import org.feed.community_feed.post.domain.content.Content;
 import org.feed.community_feed.user.domain.User;
 import org.feed.community_feed.user.domain.UserInfo;
 import org.junit.jupiter.api.Test;
@@ -9,19 +8,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author jiyoung
- */
 class PostTest {
 
-    private final UserInfo userInfo = new UserInfo("name", "url");
-    private final User user = new User(1L, userInfo);
-    private final User otherUser = new User(2L, userInfo);
+    private final User user = new User(1L, new UserInfo("name", "url"));
+    private final User otherUser = new User(2L, new UserInfo("name", "url"));
 
-    private final Post post = new Post(1L, user, new PostContent("content"));
+    private final Post post = new Post(1L, user, "content");
 
     @Test
-    void givenPostCreated_whenLike_thenLikeCountShouldBe1(){
+    void givenPostCreatedWhenLikeThenLikeCountShouldBe1() {
         // when
         post.like(otherUser);
 
@@ -30,13 +25,13 @@ class PostTest {
     }
 
     @Test
-    void givenPostCreated_whenLikeByOtherUser_thenThrowException(){
+    void givenPostCreatedWhenLikeByOtherUserThenThrowException() {
         // when, then
         assertThrows(IllegalArgumentException.class, () -> post.like(user));
     }
 
     @Test
-    void givenPostCreatedAndLike_whenUnLike_thenLikeCountShouldBe0(){
+    void givenPostCreatedAndLikeWhenUnlikeThenLikeCountShouldBe0() {
         // given
         post.like(otherUser);
 
@@ -48,7 +43,7 @@ class PostTest {
     }
 
     @Test
-    void givenPostCreated_whenUnlike_thenLikeCountShouldBe0(){
+    void givenPostCreatedWhenUnlikeThenLikeCountShouldBe0() {
         // when
         post.unlike();
 
@@ -56,24 +51,26 @@ class PostTest {
         assertEquals(0, post.getLikeCount());
     }
 
+
     @Test
-    void givenPostCreated_whenUpdateContent_thenContentShouldBeUpdated(){
+    void givenPostCreatedWhenUpdateContentThenContentShouldBeUpdated() {
         // given
         String newPostContent = "new content";
 
         // when
-        post.updatePost(user, newPostContent, PostPublicationState.PUBLIC);
+        post.updatePost(user, newPostContent, null);
 
         // then
-        assertEquals(newPostContent, post.getContent());
+        Content content = post.getContentObject();
+        assertEquals(newPostContent, content.getContentText());
     }
 
     @Test
-    void givenPostCreated_whenUpdateOutherUser_thenThrowException(){
+    void givenPostCreatedWhenUpdateContentByOtherUserThenThrowException() {
         // given
         String newPostContent = "new content";
 
         // when, then
-        assertThrows(IllegalArgumentException.class, ()-> post.updatePost(otherUser, newPostContent, PostPublicationState.PUBLIC));
+        assertThrows(IllegalArgumentException.class, () -> post.updatePost(otherUser, newPostContent, null));
     }
 }

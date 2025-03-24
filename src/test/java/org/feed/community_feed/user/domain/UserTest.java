@@ -1,108 +1,73 @@
 package org.feed.community_feed.user.domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author jiyoung
- */
 class UserTest {
-
     private final UserInfo userInfo = new UserInfo("test", "");
-    private User user1;
-    private User user2;
-
-    @BeforeEach
-    void init(){
-        user1 = new User(1L, userInfo);
-        user2 = new User(2L, userInfo);
-    }
+    private final User user1 = new User(1L, userInfo);
+    ;
+    private final User user2 = new User(2L, userInfo);
 
     @Test
-    void givenTwoUser_whenEqual_thenReturnFalse(){
-        // when
-        boolean isSame = user1.equals(user2);
-
-        // then
-        assertFalse(isSame);
-    }
-
-    @Test
-    void givenTwoUser_whenNotEqual_thenReturnTrue(){
+    void givenCreateSameIdUserWhenEqualSameIdThenReturnTrue() {
         // given
-        User sameUser = new User(1L, userInfo);
+        UserInfo testInfo = new UserInfo("test1", "1");
+        User oneUser = new User(1L, testInfo);
 
-        // when
-        boolean isSame = user1.equals(sameUser);
-
-        // then
-        assertTrue(isSame);
+        // when, then
+        assertEquals(oneUser, user1);
     }
 
     @Test
-    void givenTwoUser_whenHashcode_thenNotEqual(){
-        // when
-        int hashCode1 = user1.hashCode();
-        int hashCode2 = user2.hashCode();
-
-        // then
-        assertNotEquals(hashCode1, hashCode2);
-    }
-
-    @Test
-    void givenTwoSameIdUser_whenHashcode_thenEqual(){
-        // given
-        User sameUser = new User(1L, userInfo);
-
-        // when
-        int hashCode1 = user1.hashCode();
-        int sameUserHashCode = sameUser.hashCode();
-
-        // then
-        assertEquals(hashCode1, sameUserHashCode);
-    }
-
-    @Test
-    void givenTwoUser_whenUser1FollowUser2_thenIncreaseUserCount(){
-        // when
+    void givenUser1WhenFollowUser2ThenUser1IncreaseFollowingCountUser2IncreaseFollowerCount() {
+        // given, when
         user1.follow(user2);
 
         // then
-        assertEquals(1, user1.followingCount());
-        assertEquals(0, user1.followerCount());
-        assertEquals(0, user2.followingCount());
-        assertEquals(1, user2.followerCount());
+        assertEquals(1, user1.getFollowingCount());
+        assertEquals(0, user1.getFollowerCount());
+        assertEquals(0, user2.getFollowingCount());
+        assertEquals(1, user2.getFollowerCount());
     }
 
     @Test
-    void givenTwoUser1FollowUser2_whenUnfollow_thenDecreaseUserCount(){
+    void givenUser1FollowUser2WhenUser1UnfollowUser2ThenReturnZero() {
         // given
         user1.follow(user2);
 
-        // when
+        //when
         user1.unfollow(user2);
 
         // then
-        assertEquals(0, user1.followingCount());
-        assertEquals(0, user1.followerCount());
-        assertEquals(0, user2.followingCount());
-        assertEquals(0, user2.followerCount());
+        assertEquals(0, user1.getFollowingCount());
+        assertEquals(0, user1.getFollowerCount());
+        assertEquals(0, user2.getFollowingCount());
+        assertEquals(0, user2.getFollowerCount());
     }
 
     @Test
-    void givenTwoUser_whenUnfollow_thenDecreaseUserCount(){
-        // when
+    void whenUser1UnfollowUser2ThenAllCountZero() {
+        //when
         user1.unfollow(user2);
 
         // then
-        assertEquals(0, user1.followingCount());
-        assertEquals(0, user1.followerCount());
-        assertEquals(0, user2.followingCount());
-        assertEquals(0, user2.followerCount());
+        assertEquals(0, user1.getFollowingCount());
+        assertEquals(0, user1.getFollowerCount());
+        assertEquals(0, user2.getFollowingCount());
+        assertEquals(0, user2.getFollowerCount());
+    }
+
+
+    @Test
+    void givenOneUserWhenFollowSameUserThenThrowError() {
+        assertThrows(IllegalArgumentException.class, () -> user1.follow(user1));
+    }
+
+    @Test
+    void givenOneUserWhenUnfollowSameUserThenThrowError() {
+        assertThrows(IllegalArgumentException.class, () -> user1.unfollow(user1));
     }
 }

@@ -1,4 +1,4 @@
-package org.feed.community_feed.acceptance.steps;
+package org.feed.community_feed.acceptance.post;
 
 import io.restassured.RestAssured;
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
@@ -7,9 +7,6 @@ import org.springframework.http.MediaType;
 
 import java.util.List;
 
-/**
- * @author jiyoung
- */
 public class FeedAcceptanceSteps {
 
     // io.restassured.response.Response

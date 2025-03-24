@@ -5,28 +5,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author jiyoung
- */
 class PostContentTest {
-
     @Test
-    void givenContentLengthIsOk_whenCreated_thenReturnTextContent() {
+    void givenContentLengthIsOkWhenCreatePostContentThenReturnTextContext() {
         // given
-        String text = "this is a test";
+        String contentText = "this is a test content";
 
         // when
-        PostContent content = new PostContent(text);
+        PostContent content = new PostContent(contentText);
 
-        //then
-        assertEquals(text, content.contentText);
+        // then
+        assertEquals(contentText, content.getContentText());
     }
 
     @Test
-    void givenContentLengthIsOver_whenCreated_thenThrowError() {
+    void givenContentLengthIsOverLimitCreatePostContentThenThrowError() {
         // given
         String content = "a".repeat(501);
 
@@ -35,19 +30,19 @@ class PostContentTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"뷁, 닭, 굵, 삵, 슑"})
-    void givenContentLengthIsOverAndKorean_whenCreated_thenThrowError(String koreanWord) {
+    @ValueSource(strings = {"뷁", "닭", "굵"})
+    void givenContentLengthIsOverLimitAndKoreanCreatePostContentThenThrowError(String koreanContent) {
         // given
-        String content = koreanWord.repeat(501);
+        String content = koreanContent.repeat(501);
 
         // when, then
         assertThrows(IllegalArgumentException.class, () -> new PostContent(content));
     }
 
     @Test
-    void givenContentLengthIsUnder_whenCreated_thenThrowError() {
+    void givenContentLengthIsUnderLimitCreatePostContentThenThrowError() {
         // given
-        String content = "a".repeat(4);
+        String content = "abcd";
 
         // when, then
         assertThrows(IllegalArgumentException.class, () -> new PostContent(content));
@@ -55,66 +50,44 @@ class PostContentTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    void givenContentIsEmpty_whenCreated_thenThrowError(String value) {
-        // when, then
-        assertThrows(IllegalArgumentException.class, () -> new PostContent(value));
+    void givenContentLengthIsEmptyAndNullLimitCreatePostContentThenThrowError(String content) {
+        assertThrows(IllegalArgumentException.class, () -> new PostContent(content));
     }
 
     @Test
-    void givenContentLengthIsOK_whenUpdated_thenNotThrowError() {
-        // given
-        String content = "this is a test content";
-        PostContent postContent = new PostContent(content);
-
-        // when, then
-        postContent.updateContent("this is a updated content");
-    }
-
-    @Test
-    void givenContentLengthIsOK_whenUpdated_thenReturnUpdatedContent() {
+    void givenContentLengthIsOkWhenUpdateContentThenNotThrowError() {
         // given
         String content = "this is a test content";
         PostContent postContent = new PostContent(content);
 
         // when
-        String updatedContent = "this is a updated content";
-        postContent.updateContent(updatedContent);
+        String newContent = "this is an other test content";
+        postContent.updateContent(newContent);
 
         // then
-        assertEquals(updatedContent, postContent.contentText);
+        assertEquals(newContent, postContent.getContentText());
+        assertTrue(postContent.isEdited());
     }
 
     @Test
-    void givenContentLengthIsOver_whenUpdated_thenThrowError() {
+    void givenContentLengthIsOverLimitWhenUpdateContentThenThrowError() {
         // given
         String content = "this is a test content";
         PostContent postContent = new PostContent(content);
 
         // when, then
-        String value = "a".repeat(501);
-        assertThrows(IllegalArgumentException.class, () -> postContent.updateContent(value));
+        String overLimitContent = "a".repeat(501);
+        assertThrows(IllegalArgumentException.class, () -> postContent.updateContent(overLimitContent));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"뷁, 닭, 굵, 삵, 슑"})
-    void givenContextLengthIsOverAndKorean_whenUpdated_thenThrowError(String koreanWord) {
+    @NullAndEmptySource
+    void givenContentLengthIsOverLimitAndKoreanWhenUpdateContentThenThrowError(String nullOrEmptyContent) {
         // given
         String content = "this is a test content";
         PostContent postContent = new PostContent(content);
 
         // when, then
-        String value = koreanWord.repeat(501);
-        assertThrows(IllegalArgumentException.class, () -> postContent.updateContent(value));
-    }
-
-    @Test
-    void givenContextLengthIsUnder_whenUpdated_thenThrowError() {
-        // given
-        String content = "this is a test content";
-        PostContent postContent = new PostContent(content);
-
-        // when, then
-        String value = "a".repeat(4);
-        assertThrows(IllegalArgumentException.class, () -> postContent.updateContent(value));
+        assertThrows(IllegalArgumentException.class, () -> postContent.updateContent(nullOrEmptyContent));
     }
 }

@@ -5,28 +5,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author jiyoung
- */
 class CommentContentTest {
-
     @Test
-    void givenContentLengthIsOk_whenCreateCommentContent_thenReturnTextContext(){
+    void givenContentLengthIsOkWhenCreatePostContentThenNotThrowError() {
         // given
-        String contentText = "This is a test content";
+        String content = "this is a test content";
 
-        // when
-        CommentContent content = new CommentContent(contentText);
-
-        // then
-        assertEquals(contentText, content.getContentText());
+        // when, then
+        assertDoesNotThrow(() -> new CommentContent(content));
     }
 
     @Test
-    void givenContentLengthIsOver_whenCreateCommentContent_thenThrowError(){
+    void givenContentLengthIsOverLimitCreatePostContentThenThrowError() {
         // given
         String content = "a".repeat(101);
 
@@ -35,8 +28,8 @@ class CommentContentTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"뷁", "닭", "긁"})
-    void givenContentLengthIsOverAndKorean_whenCreateCommentContent_thenThrowError(String koreanContent){
+    @ValueSource(strings = {"뷁", "닭", "굵"})
+    void givenContentLengthIsOverLimitAndKoreanCreatePostContentThenThrowError(String koreanContent) {
         // given
         String content = koreanContent.repeat(101);
 
@@ -44,9 +37,18 @@ class CommentContentTest {
         assertThrows(IllegalArgumentException.class, () -> new CommentContent(content));
     }
 
+    @Test
+    void givenContentLengthIsUnderLimitCreatePostContentThenNotThrowError() {
+        // given
+        String content = "abcd";
+
+        // when, then
+        assertDoesNotThrow(() -> new CommentContent(content));
+    }
+
     @ParameterizedTest
     @NullAndEmptySource
-    void givenContentLengthIsEmptyAndNull_whenCreateCommentContent_thenThrowError(String content){
-        assertThrows(IllegalArgumentException.class, () -> new CommentContent(content));
+    void givenContentLengthIsEmptyLimitCreatePostContentThenThrowError(String source) {
+        assertThrows(IllegalArgumentException.class, () -> new CommentContent(source));
     }
 }

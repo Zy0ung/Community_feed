@@ -6,15 +6,14 @@ import org.feed.community_feed.user.domain.User;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author jiyoung
- */
 public class FakeUserRelationRepository implements UserRelationRepository {
+
     private final Set<Relation> store = new HashSet<>();
 
+
     @Override
-    public boolean isAlreadyFollow(User user, User targetUSer) {
-        return store.contains(new Relation(user.getId(), targetUSer.getId()));
+    public boolean isAlreadyFollow(User user, User targetUser) {
+        return store.contains(new Relation(user.getId(), targetUser.getId()));
     }
 
     @Override
@@ -28,4 +27,5 @@ public class FakeUserRelationRepository implements UserRelationRepository {
     }
 }
 
-record Relation(Long userId, Long targetUserId){}
+record Relation(Long userId, Long targetUserId) {
+}

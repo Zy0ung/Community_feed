@@ -1,4 +1,4 @@
-package org.feed.community_feed.acceptance;
+package org.feed.community_feed.acceptance.post;
 
 import org.feed.community_feed.acceptance.utils.AcceptanceTestTemplate;
 import org.feed.community_feed.post.application.dto.CreatePostRequestDto;
@@ -9,22 +9,20 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.feed.community_feed.acceptance.steps.FeedAcceptanceSteps.requestCreatePost;
-import static org.feed.community_feed.acceptance.steps.FeedAcceptanceSteps.requestFeedList;
+import static org.feed.community_feed.acceptance.post.FeedAcceptanceSteps.requestCreatePost;
+import static org.feed.community_feed.acceptance.post.FeedAcceptanceSteps.requestFeedList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author jiyoung
- */
-public class FeedAcceptanceTest extends AcceptanceTestTemplate {
+
+class FeedAcceptanceTest extends AcceptanceTestTemplate {
 
     /**
-     * User1 --- follow ---> user2
-     * User2 --- follow ---> user3
+     * User 1 --- follow ---> User 2
+     * User 1 --- follow ---> User 3
      */
     @BeforeEach
-    void setUp() {
-        super.init();
+    void init() {
+        super.setUp();
     }
 
     /**
@@ -41,7 +39,7 @@ public class FeedAcceptanceTest extends AcceptanceTestTemplate {
         List<GetPostContentResponseDto> result = requestFeedList(1L);
 
         // then
-        assertEquals(1, requestFeedList(1L).size());
+        assertEquals(1, result.size());
         assertEquals(createdPostId, result.get(0).getId());
     }
 }

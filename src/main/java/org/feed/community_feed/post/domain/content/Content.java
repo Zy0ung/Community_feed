@@ -15,7 +15,7 @@ public abstract class Content {
         this.updateTimeInfo = new DateTimeInfo();
     }
 
-    public void updateContent(String updateContent){
+    public void updateContent(String updateContent) {
         checkText(updateContent);
         this.contentText = updateContent;
         this.updateTimeInfo.updateEditDateTime();
@@ -23,7 +23,11 @@ public abstract class Content {
 
     protected abstract void checkText(String contentText);
 
-    public String getContentText(){
+    public String getContentText() {
         return contentText;
+    }
+
+    public boolean isEdited() {
+        return updateTimeInfo.isEdited();
     }
 }

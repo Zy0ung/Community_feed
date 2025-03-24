@@ -1,7 +1,6 @@
 package org.feed.community_feed.post.domain.comment;
 
 import org.feed.community_feed.post.domain.Post;
-import org.feed.community_feed.post.domain.content.PostContent;
 import org.feed.community_feed.user.domain.User;
 import org.feed.community_feed.user.domain.UserInfo;
 import org.junit.jupiter.api.Test;
@@ -9,20 +8,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author jiyoung
- */
 class CommentTest {
 
-    private final UserInfo userInfo = new UserInfo("name", "url");
-    private final User user = new User(1L, userInfo);
-    private final User otherUser = new User(2L, userInfo);
+    private final User user = new User(1L, new UserInfo("name", "url"));
+    private final User otherUser = new User(2L, new UserInfo("name", "url"));
 
-    private final Post post = new Post(1L, user, new PostContent("content"));
-    private final Comment comment = new Comment(1L, post, user, "content");
+    private final Post post = new Post(1L, user, "content");
+    private final Comment comment = new Comment(1L, post, user, "comment content");
 
     @Test
-    void givenCommentCreated_whenLike_thenLikeCountShouldBe1() {
+    void givenCommentWhenLikeThenLikeCountShouldBe1() {
         // when
         comment.like(otherUser);
 
@@ -31,15 +26,15 @@ class CommentTest {
     }
 
     @Test
-    void givenCommentCreated_whenLikeBySelf_thenThrowException() {
+    void givenCommentWhenLikeBySameUserThenLikeCountShouldThrowError() {
         // when, then
         assertThrows(IllegalArgumentException.class, () -> comment.like(user));
     }
 
     @Test
-    void givenCommentCreatedAndLike_whenUnLike_thenLikeCountShouldBe0() {
+    void givenCommentCreatedAndLikeWhenUnlikeThenLikeCountShouldBe0() {
         // given
-        comment.like(otherUser);
+        comment.getLikeCount();
 
         // when
         comment.unlike();
@@ -49,7 +44,7 @@ class CommentTest {
     }
 
     @Test
-    void givenCommentCreated_whenUnlike_thenLikeCountShouldBe0() {
+    void givenCommentCreatedWhenUnlikeThenLikeCountShouldBe0() {
         // when
         comment.unlike();
 
@@ -58,23 +53,24 @@ class CommentTest {
     }
 
     @Test
-    void givenComment_whenUpdateContent_thenShouldBeUpdated() {
+    void givenCommentWhenUpdateContentThenContentShouldBeUpdated() {
         // given
-        String newCommentContent = "new content";
+        String newContent = "new content";
 
         // when
-        comment.updateComment(user, newCommentContent);
+        comment.updateComment(user, newContent);
 
-        //then
-        assertEquals(newCommentContent, comment.getContentText());
+        // then
+        assertEquals(newContent, comment.getContentText());
     }
 
     @Test
-    void givenComment_whenUpdateContentOver100_thenThrowException() {
+    void givenCommentWhenUpdateContentOver100ThenThrowError() {
         // given
-        String newCommentContent = "a".repeat(101);
+        String newContent = "a".repeat(101);
 
         // when, then
-        assertThrows(IllegalArgumentException.class, () -> comment.updateComment(user, newCommentContent));
+        assertThrows(IllegalArgumentException.class, () -> comment.updateComment(user, newContent));
     }
+
 }
