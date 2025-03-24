@@ -20,7 +20,7 @@ public class FeedAcceptanceSteps {
                 .then().log().all()
                 .extract()
                 .jsonPath()
-                .getObject("value", Long.class);
+                .getObject("data", Long.class);
     }
 
     public static List<GetPostContentResponseDto> requestFeedList(Long requestUserId) {
@@ -32,6 +32,6 @@ public class FeedAcceptanceSteps {
                 .then().log().all()
                 .extract()
                 .jsonPath()
-                .getList("value", GetPostContentResponseDto.class);
+                .getList("data", GetPostContentResponseDto.class);
     }
 }

@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # DB 스키마 자동 업데이트 (기존 테이블을 덮어쓰지 않음)
+      ddl-auto: create-drop  # DB 스키마 자동 업데이트 (기존 테이블을 덮어쓰지 않음)
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect  # H2 전용 다이얼렉트 설정

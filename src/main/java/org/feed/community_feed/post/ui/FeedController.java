@@ -1,5 +1,6 @@
 package org.feed.community_feed.post.ui;
 
+import lombok.RequiredArgsConstructor;
 import org.feed.community_feed.common.ui.Response;
 import org.feed.community_feed.post.repository.post_queue.UserPostQueueQueryRepository;
 import org.feed.community_feed.post.ui.dto.GetPostContentResponseDto;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-
 /**
  * @author jiyoung
  */
@@ -20,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FeedController {
 
-    private final UserPostQueueQueryRepository queueQueryRepository;
+    private final UserPostQueueQueryRepository userPostQueueQueryRepository;
 
     @GetMapping("/{userId}")
     public Response<List<GetPostContentResponseDto>> getPostFeed(@PathVariable(name = "userId") Long userId,
-            Long lastPostId) {
-        List<GetPostContentResponseDto> result = queueQueryRepository.getContentResponse(userId, lastPostId);
+                                                                 Long lastPostId) {
+        List<GetPostContentResponseDto> result = userPostQueueQueryRepository.getContentResponse(userId, lastPostId);
         return Response.ok(result);
     }
 }
